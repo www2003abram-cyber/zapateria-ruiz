@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SÍGUENOS - TikTok</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- ESTILOS CSS --- */
+        :root {
+            --bg-color: #f0c6ff; /* Fondo morado claro de la imagen */
+            --main-title-color: #3b0060;
+            --subtitle-color: #6a3a9a;
+            --card-bg-color: #fdf7ff;
+            --shadow-color: rgba(0, 0, 0, 0.12);
+            --back-button-bg: #7400b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .main-container {
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--main-title-color);
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--subtitle-color);
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--back-button-bg);
+            color: white;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin-bottom: 40px;
+        }
+
+        .back-button:hover {
+            background-color: #550080;
+        }
+
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .card {
+            background-color: var(--card-bg-color);
+            padding: 35px 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 20px var(--shadow-color);
+            width: 100%;
+            max-width: 320px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-logo-container {
+            width: 120px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .main-logo-container img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .brand-title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .brand-title i {
+            font-size: 1.4rem;
+            color: #000000;
+        }
+
+        .brand-title h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #111111;
+        }
+
+        .description {
+            font-size: 0.95rem;
+            color: #555555;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            max-width: 220px;
+        }
+
+        .visit-button {
+            display: block;
+            width: 100%;
+            background-color: #000000;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+        }
+
+        .visit-button:hover {
+            background-color: #222222;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <h1 class="main-title">SÍGUENOS</h1>
+        <p class="subtitle">Encuéntranos en redes sociales</p>
+        
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i> Volver al menú
+        </a>
+
+        <div class="cards-container">
+            <div class="card">
+                
+                <div class="main-logo-container">
+                    <img src="logotiktok.png" alt="TikTok Grande">
+                </div>
+                
+                <div class="brand-title">
+                    <i class="fab fa-tiktok"></i>
+                    <h2>TikTok</h2>
+                </div>
+
+                <p class="description">
+                    Mira nuestros videos y los últimos modelos
+                </p>
+                
+                <a href="https://vm.tiktok.com/ZS92EEbGpTQhU-vhM9T/" class="visit-button" target="_blank">
+                    Visitar
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

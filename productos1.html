@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>productos - Zapatería Ruiz</title>
+  
+  <style>
+    /* --- ESTILOS CSS --- */
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #e1cfe6;
+      color: #2e2e2e;
+    }
+
+    .back-nav {
+      padding: 14px 20px;
+    }
+
+    .btn-volver {
+      background-color: #6a0dad;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+
+    .btn-volver:hover {
+      background-color: #4a0099;
+    }
+
+    .seccion-header {
+      text-align: center;
+      padding: 30px 16px 10px;
+    }
+
+    .seccion-header h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      color: #5b2db5;
+      font-weight: 400;
+      letter-spacing: 1px;
+      text-transform: lowercase;
+    }
+
+    .seccion-header p {
+      font-size: 1rem;
+      color: #8b4513;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      padding: 24px 40px 40px;
+    }
+
+    .producto-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 5px solid #e0d0f0;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .producto-card .img-box {
+      width: 100%;
+      background-color: #cccccc;
+      height: 170px;
+      overflow: hidden;
+    }
+
+    .producto-card .img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .producto-card .info {
+      background-color: #ede0ff;
+      width: 100%;
+      padding: 14px 10px 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .producto-card .nombre {
+      font-size: 0.88rem;
+      color: #333;
+      text-transform: uppercase;
+    }
+
+    .producto-card .precio {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #5b2db5;
+    }
+
+    .producto-card .btn-ver {
+      background-color: #6a0dad;
+      color: #ffffff;
+      border: none;
+      border-radius: 30px;
+      padding: 8px 22px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .producto-card .btn-ver:hover {
+      background-color: #4a0099;
+    }
+
+    /* --- ESTILOS MODAL --- */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.activo {
+      display: flex;
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 420px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+      animation: aparecer 0.25s ease;
+    }
+
+    @keyframes aparecer {
+      from { transform: scale(0.85); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+
+    .modal .modal-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      background: #ccc;
+      display: block;
+    }
+
+    .modal .modal-info {
+      padding: 20px;
+      text-align: center;
+      background: #ede0ff;
+    }
+
+    .modal .modal-nombre {
+      font-size: 1rem;
+      color: #333;
+      margin-bottom: 6px;
+    }
+
+    .modal .modal-precio {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #5b2db5;
+      margin-bottom: 14px;
+    }
+
+    .modal .cerrar {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal .cerrar:hover { 
+      background: rgba(0,0,0,0.8); 
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 1000px) {
+      .productos-grid { grid-template-columns: repeat(3, 1fr); padding: 20px; }
+    }
+
+    @media (max-width: 650px) {
+      .productos-grid { grid-template-columns: repeat(2, 1fr); padding: 14px; gap: 10px; }
+      .producto-card .img-box { height: 130px; }
+    }
+
+    @media (max-width: 380px) {
+      .productos-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="back-nav">
+    <a href="index.html" class="btn-volver">← Volver al menú</a>
+  </div>
+
+  <div class="seccion-header">
+    <h1>PRODUCTOS</h1>
+    <p>👟Tenis y zapatos de hombres, mujeres y niños</p>
+  </div>
+
+  <div class="productos-grid">
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis1.jpg" alt="Producto 1" /></div>
+      <div class="info">
+        <span class="nombre">"LUIS VUITTON"</span>
+        <span class="precio">$455</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis2.jpg" alt="Producto 2" /></div>
+      <div class="info">
+        <span class="nombre">LUIS VUITTON</span>
+        <span class="precio">$450</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis3.jpg" alt="Producto 3" /></div>
+      <div class="info">
+        <span class="nombre">NIKE 72°</span>
+        <span class="precio">$470</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis4.jpg" alt="Producto 4" /></div>
+      <div class="info">
+        <span class="nombre">TENIS "YESSI"</span>
+        <span class="precio">$450</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis5.jpg" alt="Producto 5" /></div>
+      <div class="info">
+        <span class="nombre">TENIS "BN BANCE"</span>
+        <span class="precio">$450</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis6.jpg" alt="Producto 6" /></div>
+      <div class="info">
+        <span class="nombre">TENIS "PIRMA"</span>
+        <span class="precio">$835</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis7.jpg" alt="Producto 7" /></div>
+      <div class="info">
+        <span class="nombre">TENIS "PIRMA"</span>
+        <span class="precio">$795</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis8.jpg" alt="Producto 8" /></div>
+      <div class="info">
+        <span class="nombre">TENIS "PIRMA"</span>
+        <span class="precio">$695</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis9.jpg" alt="Producto 9" /></div>
+      <div class="info">
+        <span class="nombre">TENIS "DG"</span>
+        <span class="precio">$450</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis10.jpg" alt="Producto 10" /></div>
+      <div class="info">
+        <span class="nombre">TENIS DG</span>
+        <span class="precio">$455</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis11.jpg" alt="Producto 11" /></div>
+      <div class="info">
+        <span class="nombre">TENIS ADIDAS</span>
+        <span class="precio">$395</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis12.jpg" alt="Producto 12" /></div>
+      <div class="info">
+        <span class="nombre">TENIS WALKIR </span>
+        <span class="precio">$450</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis13.jpg" alt="Producto 13" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MCQUEEN</span>
+        <span class="precio">$470</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis14.jpg" alt="Producto 14" /></div>
+      <div class="info">
+        <span class="nombre">TENIS NIKE SB </span>
+        <span class="precio">$395</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis15.jpg" alt="Producto 15" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MCQUEEN</span>
+        <span class="precio">$475</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis16.jpg" alt="Producto 16" /></div>
+      <div class="info">
+        <span class="nombre">TENIS DEPORTIVO CR7</span>
+        <span class="precio">$755</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis17.jpg" alt="Producto 17" /></div>
+      <div class="info">
+        <span class="nombre">TENIS DEPORTIVO "CR7"</span>
+        <span class="precio">$750</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis18.jpg" alt="Producto 18" /></div>
+      <div class="info">
+        <span class="nombre">TENIS DEPORTIVO "NIKE"</span>
+        <span class="precio">$755</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis19.jpg" alt="Producto 19" /></div>
+      <div class="info">
+        <span class="nombre">TENIS DEPORTIVO UNION</span>
+        <span class="precio">$415</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis20.jpg" alt="Producto 20" /></div>
+      <div class="info">
+        <span class="nombre">TENIS YESSI</span>
+        <span class="precio">$450</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis21.jpg" alt="Producto 21" /></div>
+      <div class="info">
+        <span class="nombre">TENIS YESSI</span>
+        <span class="precio">$455</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis22.jpg" alt="Producto 22" /></div>
+      <div class="info">
+        <span class="nombre">TENIS NIKE</span>
+        <span class="precio">$390</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis23.jpg" alt="Producto 23" /></div>
+      <div class="info">
+        <span class="nombre">TENIS CAMPUS</span>
+        <span class="precio">$395</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="tenis24.jpg" alt="Producto 24" /></div>
+      <div class="info">
+        <span class="nombre">TENIS WALKIR</span>
+        <span class="precio">$395</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="zapato1.jpg" alt="Producto 25" /></div>
+      <div class="info">
+        <span class="nombre">ZAPATO LA PAG</span>
+        <span class="precio">$550</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="zapato2.jpg" alt="Producto 26" /></div>
+      <div class="info">
+        <span class="nombre">ZAPATO "LAP PAG"</span>
+        <span class="precio">$555</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="zapato3.jpg" alt="Producto 27" /></div>
+      <div class="info">
+        <span class="nombre">ZAPATO "LAP PAG"</span>
+        <span class="precio">$550</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="zapato4.jpg" alt="Producto 28" /></div>
+      <div class="info">
+        <span class="nombre">CASUAL BOTA "LA PAG"</span>
+        <span class="precio">$575</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="zapato5.jpg" alt="Producto 29" /></div>
+      <div class="info">
+        <span class="nombre">ZAPATO "VERMONT"</span>
+        <span class="precio">$545</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="zapato6.jpg" alt="Producto 30" /></div>
+      <div class="info">
+        <span class="nombre">BOTA "VERMONT"</span>
+        <span class="precio">$575</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="zapato7.jpg" alt="Producto 31" /></div>
+      <div class="info">
+        <span class="nombre">ZAPATO "CASSINI"</span>
+        <span class="precio">$565</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="zapato8.jpg" alt="Producto 32" /></div>
+      <div class="info">
+        <span class="nombre">ZAPATO "CUSTOM"</span>
+        <span class="precio">$545</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="zapato9.jpg" alt="Producto 33" /></div>
+      <div class="info">
+        <span class="nombre">ZAPATO "CRISTIAN"</span>
+        <span class="precio">$550</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="zapato10.jpg" alt="Producto 34" /></div>
+      <div class="info">
+        <span class="nombre">BOTA CASUAL "CRISTIAN"</span>
+        <span class="precio">$000</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama1.jpg" alt="Producto 35" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "DIAGO"</span>
+        <span class="precio">$390</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama2.jpg" alt="Producto 36" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "FASHION"</span>
+        <span class="precio">$395</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama3.jpg" alt="Producto 37" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "LIXUE"</span>
+        <span class="precio">$390</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama4.jpg" alt="Producto 38" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "LIXUE"</span>
+        <span class="precio">$395</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama5.jpg" alt="Producto 39" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "ANDREA"</span>
+        <span class="precio">$415</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama6.jpg" alt="Producto 40" /></div>
+      <div class="info">
+        <span class="nombre">TENIS "ANDREA"</span>
+        <span class="precio">$420</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama7.jpg" alt="Producto 41" /></div>
+      <div class="info">
+        <span class="nombre">TENIS ANDREA</span>
+        <span class="precio">$415</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama8.jpg" alt="Producto 42" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "FASHION"</span>
+        <span class="precio">$395</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama9.jpg" alt="Producto 43" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER FASHION</span>
+        <span class="precio">$390</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama10.jpg" alt="Producto 44" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "FASHION"</span>
+        <span class="precio">$450</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama11.jpg" alt="Producto 45" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "MAKENA"</span>
+        <span class="precio">$390</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama12.jpg" alt="Producto 46" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "PUMA"</span>
+        <span class="precio">$330</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama13.jpg" alt="Producto 47" /></div>
+      <div class="info">
+        <span class="nombre">ZAPATO MUJER "ETNIA"</span>
+        <span class="precio">$380</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama14.jpg" alt="Producto 48" /></div>
+      <div class="info">
+        <span class="nombre">ZAPATO MUJER "ETNIA"</span>
+        <span class="precio">$385</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+    <div class="producto-card">
+      <div class="img-box"><img src="dama15.jpg" alt="Producto 48" /></div>
+      <div class="info">
+        <span class="nombre">ZAPATO MUJER "ETNIA</span>
+        <span class="precio">$380</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama16.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "CAPIEL´ SK"</span>
+        <span class="precio">$340</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+    
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama17.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "FASHION"</span>
+        <span class="precio">$395</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama18.jpg" alt="Producto 48" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "DIAGO"</span>
+        <span class="precio">$390</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama19.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "H-GORS"</span>
+        <span class="precio">$350</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+     </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama20.jpg" alt="Producto 48" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "H-GORS"</span>
+        <span class="precio">$355</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama21.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "NIKE" </span>
+        <span class="precio">$315</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+    
+      <div class="producto-card">
+      <div class="img-box"><img src="dama22.jpg" alt="Producto 48" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "NIKE"</span>
+        <span class="precio">$320</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama23.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "FASHION"</span>
+        <span class="precio">$395</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="dama24.jpg" alt="Producto 48" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "PUMA"</span>
+        <span class="precio">$325</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama25.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "MEKONE SPORT"</span>
+        <span class="precio">$295</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="dama26.jpg" alt="Producto 48" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "LIXUE"</span>
+        <span class="precio">$395</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama27.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "ENCLAND"</span>
+        <span class="precio">$350</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+    
+    <div class="producto-card">
+      <div class="img-box"><img src="dama28.jpg" alt="Producto 48" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "H-GORS</span>
+        <span class="precio">$390</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama29.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "FASHION"</span>
+        <span class="precio">$395</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="dama30.jpg" alt="Producto 48" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "MAKENA"</span>
+        <span class="precio">$325</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="dama31.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TENIS MUJER "FASHION"</span>
+        <span class="precio">$355</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+    
+    <div class="producto-card">
+      <div class="img-box"><img src="niño1.jpg" alt="Producto 48" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niño "NIKE SB"</span>
+        <span class="precio">$290</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="niño2.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niño "NIKE SB"</span>
+        <span class="precio">$295</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+    
+    <div class="producto-card">
+      <div class="img-box"><img src="niño3.jpg" alt="Producto 48" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niño "NIKE SB"</span>
+        <span class="precio">$295</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="niño4.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niño "AIR"</span>
+        <span class="precio">$360</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño5.jpg" alt="Producto 48" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niño "ADIDAS"</span>
+        <span class="precio">$325</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+    <div class="producto-card">
+      <div class="img-box"><img src="niño6.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niño "DUNK"</span>
+        <span class="precio">$315</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño7.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niño "JORDAN RETRO"</span>
+        <span class="precio">$350</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño8.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niño "JORDAN RETRO"</span>
+        <span class="precio">$355</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño9.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niño "PUMA"</span>
+        <span class="precio">$325</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño10.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niño "YESSI"</span>
+        <span class="precio">$350</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño11.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS UNISEX "CAMPUS"</span>
+        <span class="precio">$335</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño12.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niña "MEKONE"</span>
+        <span class="precio">$285</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño13.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niña "EBOX"</span>
+        <span class="precio">$290</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño14.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niña "YESSI"</span>
+        <span class="precio">$335</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño15.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niña "NIKE"</span>
+        <span class="precio">$295</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño16.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niña "SKILINE"</span>
+        <span class="precio">$295</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño17.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niña "TERRIBLITO"</span>
+        <span class="precio">$295</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño18.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niña "LIXUE"</span>
+        <span class="precio">$325</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño19.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niña "PUMA"</span>
+        <span class="precio">$285</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño20.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niña "CAMPUS"</span>
+        <span class="precio">$325</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño21.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TERNIS niña "SKILINE"</span>
+        <span class="precio">$295</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño22.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">ZAPATO niño "AKBAL"</span>
+        <span class="precio">$290</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+       <div class="producto-card">
+      <div class="img-box"><img src="niño23.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">ZAPATO niño "GROUP JART"</span>
+        <span class="precio">$350</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+       <div class="producto-card">
+      <div class="img-box"><img src="niño24.jpg" alt="Producto 49" /></div>
+      <div class="info">
+        <span class="nombre">TENIS niña "MEKONE SPORT"</span>
+        <span class="precio">$290</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+      </div>
+
+      <div class="producto-card">
+      <div class="img-box"><img src="niño26.jpg" alt="Producto 50" /></div>
+      <div class="info">
+        <span class="nombre">TENIS niño "NKE 72 TORTUGA"</span>
+        <span class="precio">$350</span>
+        <button class="btn-ver" onclick="abrirModal(this)">Ver producto</button>
+      </div>
+    </div>
+
+  <div class="modal-overlay" id="modalOverlay" onclick="cerrarModalFuera(event)">
+    <div class="modal" id="modal">
+      <button class="cerrar" onclick="cerrarModal()">✕</button>
+      <img src="" alt="Producto" class="modal-img" id="modalImg" />
+      <div class="modal-info">
+        <p class="modal-nombre" id="modalNombre"></p>
+        <p class="modal-precio" id="modalPrecio"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function abrirModal(btn) {
+      const card   = btn.closest('.producto-card');
+      const img    = card.querySelector('.img-box img').src;
+      const nombre = card.querySelector('.nombre').textContent;
+      const precio = card.querySelector('.precio').textContent;
+
+      document.getElementById('modalImg').src            = img;
+      document.getElementById('modalNombre').textContent = nombre;
+      document.getElementById('modalPrecio').textContent = precio;
+      document.getElementById('modalOverlay').classList.add('activo');
+    }
+
+    function cerrarModal() {
+      document.getElementById('modalOverlay').classList.remove('activo');
+    }
+
+    function cerrarModalFuera(e) {
+      if (e.target === document.getElementById('modalOverlay')) cerrarModal();
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') cerrarModal();
+    });
+  </script>
+</body>
+</html>

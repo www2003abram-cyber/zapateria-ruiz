@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contacto - Zapatería Ruiz</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url("imagenlogo.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-color: #2a0a4e;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto auto 1fr;
+      align-items: start;
+      padding: 50px 60px;
+      gap: 16px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(40, 0, 80, 0.35);
+      z-index: 0;
+    }
+
+    h1, .subtitulo, .btn-volver, .contacto-card {
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      grid-column: 1;
+      grid-row: 1;
+      text-align: left;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      color: #3b006e;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 10px rgba(255,255,255,0.4);
+    }
+
+    .subtitulo {
+      grid-column: 1;
+      grid-row: 2;
+      text-align: left;
+      font-size: 1rem;
+      color: #ffffff;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+      margin-top: -8px;
+    }
+
+    .btn-volver {
+      grid-column: 1;
+      grid-row: 3;
+      justify-self: start;
+      display: inline-block;
+      background-color: #6a0dad;
+      color: white;
+      padding: 12px 28px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-top: 10px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-volver:hover {
+      background-color: #4a0099;
+      transform: scale(1.05);
+    }
+
+    .contacto-card {
+      grid-column: 2;
+      grid-row: 1 / 5;
+      align-self: start;
+      justify-self: end;
+      background: rgba(243, 232, 255, 0.92);
+      border-radius: 24px;
+      padding: 36px 28px;
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+      backdrop-filter: blur(6px);
+    }
+
+    .icono-top { font-size: 4rem; }
+
+    .contacto-titulo {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #2e2e2e;
+      letter-spacing: 1px;
+    }
+
+    .contacto-fila {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 14px 20px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .contacto-fila:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(106,13,173,0.2);
+    }
+
+    .fila-icono {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.4rem;
+      overflow: hidden;
+    }
+
+    .fila-icono img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .fila-icono.whatsapp { background: #e8fff0; }
+    .fila-icono.email    { background: #f0f0f0; }
+
+    .fila-texto {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .fila-label {
+      font-size: 0.8rem;
+      color: #999;
+    }
+
+    .fila-valor {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #6a0dad;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        grid-template-columns: 1fr;
+        padding: 30px 20px;
+      }
+      h1          { grid-column: 1; grid-row: 1; text-align: center; }
+      .subtitulo  { grid-column: 1; grid-row: 2; text-align: center; }
+      .btn-volver { grid-column: 1; grid-row: 3; justify-self: center; }
+      .contacto-card { grid-column: 1; grid-row: 4; justify-self: center; }
+    }
+  </style>
+</head>
+<body>
+
+ <h2> <p class="subtitulo">manda mensaje por watssap &nbsp;&nbsp;&nbsp; ak'atel mensaje ta watssap</p> </h2>
+
+  <a href="index.html" class="btn-volver">← Volver al menú</a>
+
+  <div class="contacto-card">
+
+    <div class="icono-top">📬</div>
+    <div class="contacto-titulo">CONTÁCTANOS</div>
+
+    <!-- WHATSAPP -->
+    <a href="https://wa.me/+5219617753264?text=Hola,%20quiero%20hacer%20un%20pedido" class="contacto-fila">
+      <div class="fila-icono whatsapp">
+        <img src="logowatssap.png" alt="WhatsApp" />
+      </div>
+      <div class="fila-texto">
+        <span class="fila-label">WhatsApp</span>
+        <span class="fila-valor"> 1 961 775 3264 clic aqui</span>
+      </div>
+    </a>
+
+    <!-- CORREO -->
+    <a href="mailto:rosalinda19nov@gmail.com" class="contacto-fila">
+      <div class="fila-icono email">☎️</div>
+      <div class="fila-texto">
+        <span class="fila-label">telefono para llamada</span>
+        <span class="fila-valor">9191369215</span>
+      </div>
+    </a>
+
+  </div>
+
+</body>
+</html>
